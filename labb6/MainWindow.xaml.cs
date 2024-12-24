@@ -20,4 +20,10 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
     }
+
+    private void Button1_Click(object sender, RoutedEventArgs e)
+    {
+        Task1 task1 = new Task1();
+        task1.Show();
+    }
 }

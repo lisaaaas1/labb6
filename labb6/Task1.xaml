@@ -1,0 +1,29 @@
+<Window x:Class="labb6.Task1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:labb6"
+        mc:Ignorable="d"
+        Title="Task1" Height="450" Width="800">
+    <Grid>
+        <Label Content="Key:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
+        <TextBox Name="KeyTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="60,10,10,0" Width="300"/>
+
+        <Label Content="Value:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,50,0,0"/>
+        <TextBox Name="ValueTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="60,50,10,0" Width="300"/>
+
+        <Label Content="Hash Method:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,90,0,0"/>
+        <ComboBox Name="HashMethodComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,90,10,0" Width="260">
+            
+        </ComboBox>
+
+        <Button Name="InsertButton" Content="Insert" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,130,0,0" Width="90" Click="InsertButton_Click"/>
+        <Button Name="SearchButton" Content="Search" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="110,130,0,0" Width="90" Click="SearchButton_Click"/>
+        <Button Name="DeleteButton" Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="210,130,0,0" Width="90" Click="DeleteButton_Click"/>
+        <Button Name="GenerateAndInsertButton" Content="Generate and insert Elements" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="310,130,-10,0" Width="190" Height="20" Click="GenerateAndInsertButton_Click"/>
+        <Button Name="Statistics" Content="Коэф. зап. и длины цепочек" Margin="-10 370 580 10" Width="160" Height="20" Click="StatsButton_Click"/>
+        <Button Name="CompareHashfunction" Content="сравнение" Margin="80 370 280 10" Width="160" Height="20" Click="CompareHashFunctionsButton_Click"/>
+        <TextBox Name="ResultTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,180,10,0" Width="360" Height="170" IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+    </Grid>
+</Window>
