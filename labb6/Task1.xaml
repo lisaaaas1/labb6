@@ -21,11 +21,9 @@
         <Button Name="InsertButton" Content="Insert" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,130,0,0" Width="90" Click="InsertButton_Click"/>
         <Button Name="SearchButton" Content="Search" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="110,130,0,0" Width="90" Click="SearchButton_Click"/>
         <Button Name="DeleteButton" Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="210,130,0,0" Width="90" Click="DeleteButton_Click"/>
-        <Button Name="GenerateAndInsertButton" Content="Generate Elements"
-                HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,350,0,0" Width="200"
-                Click="GenerateAndInsertButton_Click"/>
-
-
-        <TextBox Name="ResultTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,180,10,0" Width="360" Height="150" IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+        <Button Name="GenerateAndInsertButton" Content="Generate and insert Elements" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="310,130,-10,0" Width="190" Height="20" Click="GenerateAndInsertButton_Click"/>
+        <Button Name="Statistics" Content="Коэф. зап. и длины цепочек" Margin="-10 370 580 10" Width="160" Height="20" Click="StatsButton_Click"/>
+        <Button Name="CompareHashfunction" Content="сравнение" Margin="80 370 280 10" Width="160" Height="20" Click="CompareHashFunctionsButton_Click"/>
+        <TextBox Name="ResultTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,180,10,0" Width="360" Height="170" IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
     </Grid>
 </Window>

@@ -133,27 +133,79 @@ public partial class Task1 : Window
     
     private void GenerateAndInsertButton_Click(object sender, RoutedEventArgs e)
     {
-        // Генерируем 100000 уникальных ключей
         var keys = KeyGenerator.GenerateKeys(100000);
-
-        // Генерируем случайные значения для каждого ключа
         var random = new Random();
         int count = 0;
+        
         foreach (var key in keys)
         {
-            string value = random.Next(1000, 9999).ToString(); // Генерация случайных значений
+            string value = random.Next(1000, 9999).ToString(); 
             hashTable.Insert(key, value);
-        
-            // Добавляем лог в TextBox для каждого 100-го элемента, чтобы не перегрузить интерфейс
+            
             count++;
-            if (count % 100 == 0) // Пишем в лог каждый 100-й элемент
+            if (count % 100 == 0)
             {
                 ResultTextBox.AppendText($"Inserted element {count}: Key = {key}, Value = {value}\n");
             }
         }
-
-        // После завершения операции можно вывести общий итог
+        
         ResultTextBox.AppendText("100000 elements inserted successfully!\n");
+    }
+    
+    private void StatsButton_Click(object sender, RoutedEventArgs e)
+    {
+        double loadFactor = hashTable.GetLoadFactor();
+        var (shortest, longest) = hashTable.GetChainLengthStatistics();
+
+        ResultTextBox.Text = $"коэффициент заполнения: {loadFactor:F2}\n" +
+                             $"самая короткая цепочка: {shortest}\n" +
+                             $"самая длинная цепочка: {longest}";
+    }
+    
+    private void CompareHashFunctionsButton_Click(object sender, RoutedEventArgs e)
+    {
+        // Генерация 100000 случайных ключей
+        var keys = KeyGenerator.GenerateKeys(100000);
+        var values = new string[100000];
+        for (int i = 0; i < 100000; i++)
+        {
+            values[i] = "Value_" + i.ToString();
+        }
+
+        var hashMethods = new HashTable.HashingMethod[]
+        {
+            HashTable.HashingMethod.Division,
+            HashTable.HashingMethod.Multiplication,
+            HashTable.HashingMethod.Custom1,
+            HashTable.HashingMethod.Custom2,
+            HashTable.HashingMethod.Custom3
+        };
+
+        foreach (var method in hashMethods)
+        {
+            // Устанавливаем метод хеширования
+            hashTable.SetHashingMethod(method);
+
+            // Вставляем все элементы в хеш-таблицу
+            for (int i = 0; i < keys.Length; i++)
+            {
+                hashTable.Insert(keys[i], values[i]);
+            }
+
+            // Получаем коэффициент заполнения
+            double loadFactor = hashTable.GetLoadFactor();
+
+            // Получаем статистику длины цепочек
+            var (shortest, longest) = hashTable.GetChainLengthStatistics();
+            double averageChainLength = (double)(shortest + longest) / 2;
+
+            // Отображаем результаты
+            ResultTextBox.Text += $"\nМетод: {method}\n" +
+                                  $"коэффициент заполнения: {loadFactor:F4}\n" +
+                                  $"самая короткая цепочка: {shortest}\n" +
+                                  $"самая длинная цепочка: {longest}\n" +
+                                  $"Средняя длина цепочки: {averageChainLength:F2}\n";
+        }
     }
 }
 
@@ -209,6 +261,47 @@ public class HashTable
                 throw new ArgumentException("Unknown hashing method.");
         }
     }
+    
+    public double GetLoadFactor()
+    {
+        int filledBuckets = 0;
+        foreach (var list in table)
+        {
+            if (list.Count > 0)
+            {
+                filledBuckets++;
+            }
+        }
+        return (double)filledBuckets / TableSize;
+    }
+
+    // Метод для нахождения длины самой длинной и самой короткой цепочки
+    public (int shortest, int longest) GetChainLengthStatistics()
+    {
+        int shortest = int.MaxValue;
+        int longest = 0;
+
+        foreach (var list in table)
+        {
+            int chainLength = list.Count;
+            if (chainLength > longest)
+            {
+                longest = chainLength;
+            }
+            if (chainLength > 0 && chainLength < shortest)
+            {
+                shortest = chainLength;
+            }
+        }
+
+        // Если таблица пуста, возвращаем 0 для самой короткой цепочки
+        if (shortest == int.MaxValue)
+        {
+            shortest = 0;
+        }
+
+        return (shortest, longest);
+    }
 
     // Метод деления
     private int DivisionMethod(string key)
@@ -236,13 +329,15 @@ public class HashTable
     // Метод кастомный 1
     private int CustomMethod1(string key)
     {
-        int hash = 0;
+        double hash = 0;
+        const double A = 0.6180339887;
         foreach (var ch in key)
         {
-            hash = (hash * 31) ^ ch; // XOR с числом для получения хеша
+            hash += Math.Pow(ch * A, 2);  // Умножаем символ на A и возводим в квадрат
         }
-        return Math.Abs(hash % TableSize);
+        return Math.Abs((int)(hash % TableSize)); 
     }
+
 
     // Метод кастомный 2
     private int CustomMethod2(string key)
@@ -250,7 +345,7 @@ public class HashTable
         int hash = 0;
         foreach (var ch in key)
         {
-            hash = (hash * 53) + ch; // Множитель 53
+            hash = (hash * 31) ^ (ch + 31);  // Используем XOR с числом 31 и умножаем на 31 для повышения сложности
         }
         return Math.Abs(hash % TableSize);
     }
@@ -258,13 +353,15 @@ public class HashTable
     // Метод кастомный 3
     private int CustomMethod3(string key)
     {
-        int hash = 0;
+        long hash = 0;
+        const long prime = 16777619;
         foreach (var ch in key)
         {
-            hash = (hash * 97) + ch; // Множитель 97
+            hash = (hash * prime) ^ ch;  // Умножаем на простое число и применяем XOR с текущим символом
         }
-        return Math.Abs(hash % TableSize);
+        return Math.Abs((int)(hash % TableSize));
     }
+
 
     // Вставка элемента
     public void Insert(string key, string value)
