@@ -27,7 +27,7 @@ public partial class MainWindow : Window
         HashTableTwo<string, string> hashTable = new HashTableTwo<string, string>(); // Используем HashTableTwo с ключами и значениями типа string
 
         // Генерация 10000 уникальных ключей
-        string[] keys = KeyGenerator.GenerateKeys(9000, 10); // Генерируем 10,000 ключей длиной 10 символов
+        string[] keys = KeyGenerator.GenerateKeys(1000, 10); // Генерируем 10,000 ключей длиной 10 символов
 
         foreach (var key in keys)
         {

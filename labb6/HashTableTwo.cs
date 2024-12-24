@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Text;
 
 public class HashTableTwo<TKey, TValue>
@@ -7,6 +8,7 @@ public class HashTableTwo<TKey, TValue>
     private KeyValuePair<string, TValue>?[] table = new KeyValuePair<string, TValue>?[Size];
     private Func<string, int> hashFunction;
     private Func<int, string, int> collisionResolution;
+    private int collisionCount = 0; // Счетчик коллизий
 
     public HashTableTwo()
     {
@@ -15,6 +17,29 @@ public class HashTableTwo<TKey, TValue>
         collisionResolution = LinearProbing;
     }
 
+    // Сравнительный метод для измерения производительности хеш-функций
+    public void CompareHashFunctions(List<string> keys)
+    {
+        string[] methods = { "Метод деления", "Метод умножения", "ComputeHash", "Метод Полинома", "Метод FNV (Fowler–Noll–Vo)" };
+        foreach (var method in methods)
+        {
+            SetHashFunction(method);
+            var stopwatch = Stopwatch.StartNew();
+            collisionCount = 0; // Сбрасываем счетчик коллизий
+
+            // Вставка элементов
+            foreach (var key in keys)
+            {
+                Insert(key, default(TValue)); // Вставляем элемент
+            }
+
+            stopwatch.Stop();
+            Console.WriteLine($"Хеш-функция: {method}");
+            Console.WriteLine($"Время выполнения вставки: {stopwatch.ElapsedMilliseconds} мс");
+            Console.WriteLine($"Количество коллизий: {collisionCount}");
+            Console.WriteLine();
+        }
+    }
     public void SetHashFunction(string method)
     {
         switch (method)
