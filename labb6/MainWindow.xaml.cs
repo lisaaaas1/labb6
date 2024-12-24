@@ -23,25 +23,25 @@ public partial class MainWindow : Window
     
     private void Button2_Click(object sender, RoutedEventArgs e)
     {
-        HashTableTwo hashTable = new HashTableTwo();
+        // Предположим, что значения также будут строками
+        HashTableTwo<string, string> hashTable = new HashTableTwo<string, string>(); // Используем HashTableTwo с ключами и значениями типа string
 
-        // Генерация случайных чисел и вставка в таблицу
-        Random rand = new Random();
-        for (int i = 0; i < 10000; i++)
+        // Генерация 10000 уникальных ключей
+        string[] keys = KeyGenerator.GenerateKeys(9000, 10); // Генерируем 10,000 ключей длиной 10 символов
+
+        foreach (var key in keys)
         {
-            int key = rand.Next();
-            hashTable.Insert(key, 0); // 0 - линейное исследование
+            // Вставка ключа в хеш-таблицу с произвольным значением (например, самим ключом)
+            hashTable.Insert(key, key); // Предполагаем, что метод Insert принимает ключ и значение
         }
 
-        // Тестирование поиска
-        Console.WriteLine(hashTable.Search(1234, 0));
-
         // Подсчет длины самого длинного кластера
-        Console.WriteLine($"Длина самого длинного кластера: {hashTable.LongestCluster()}");
-
-        // Тестирование производительности хэш-функций
-        hashTable.TestHashFunctions();
-        TaskTwo taskTwo = new TaskTwo();
-        taskTwo.Show();
+        int longestCluster = hashTable.LongestClusterLength();
+        
+        Console.WriteLine($"The length of the longest cluster: {longestCluster}");
+        
+        TaskTwo taskTwo2 = new TaskTwo();
+        taskTwo2.Show();
     }
 }
+

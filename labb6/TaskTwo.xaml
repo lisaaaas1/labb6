@@ -7,23 +7,40 @@
         mc:Ignorable="d"
         Title="TaskTwo" Height="450" Width="800">
     <Grid>
-        <StackPanel>
-            <TextBlock Text="Введите ключ для операции" Margin="10"/>
-            <TextBox x:Name="KeyTextBox" Width="200" Margin="10"/>
-            
-            <Button Content="Вставить элемент" Width="200" Margin="10" Click="InsertButton_Click"/>
-            <Button Content="Поиск элемента" Width="200" Margin="10" Click="SearchButton_Click"/>
-            <Button Content="Удалить элемент" Width="200" Margin="10" Click="DeleteButton_Click"/>
-            
-            <TextBlock Text="Результаты:" Margin="10"/>
-            <TextBox x:Name="ResultTextBox" Width="500" Height="100" Margin="10" IsReadOnly="True" VerticalScrollBarVisibility="Auto"/>
-            <ComboBox x:Name="HashingMethodComboBox" Width="200" Margin="10">
-                <ComboBoxItem>Линейное исследование</ComboBoxItem>
-                <ComboBoxItem>Квадратичное исследование</ComboBoxItem>
-                <ComboBoxItem>Двойное хеширование</ComboBoxItem>
-            </ComboBox>
-            
-            <Button Content="Провести тестирование хэш-функций" Width="300" Margin="10" Click="TestButton_Click"/>
-        </StackPanel>
+        <Label Content="Введите ключ:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
+        <TextBox x:Name="KeyInput" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,30,0,0" Width="200"/>
+        
+        <Label  Content="Введите значение:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,50,0,0" Width="360"/>
+        <TextBox x:Name="ValueInput" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,70,0,0" Width="200"/>
+
+        
+        <Label Content="Выберите хеш-функцию:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,100,0,0"/>
+        <ComboBox x:Name="HashFunctionComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,120,0,0" Width="200">
+            <ComboBoxItem Content="Метод умножения" />
+            <ComboBoxItem Content="Метод деления" /> 
+            <ComboBoxItem Content="Метод суммирования и побитовых операций" /> 
+            <ComboBoxItem Content="Метод Полинома" />
+            <ComboBoxItem Content="Метод FNV (Fowler–Noll–Vo)" />
+        </ComboBox>
+        
+        <Label Content="Выберите метод разрешения коллизий:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,140,0,0"/>
+        <ComboBox x:Name="HashMethodComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,160,0,0" Width="200">
+            <ComboBoxItem Content="Линейное исследование" />
+            <ComboBoxItem Content="Квадратичное исследование" />
+            <ComboBoxItem Content="Двойное хеширование" />
+            <ComboBoxItem Content="Прогрессивное пробирование" />
+            <ComboBoxItem Content="Циклическое пробирование" />
+        </ComboBox>
+
+        <Button Content="Вставить" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,200,0,0" Click="InsertButton_Click"/>
+        
+        <Button Content="Поиск" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="120,200,0,0" Click="SearchButton_Click"/>
+        <Button Content="Удалить" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="210,200,0,0" Click="DeleteButton_Click"/>
+
+        
+        <TextBlock x:Name="OutputText" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="400,200,0,0" Width="360" TextWrapping="Wrap"/>
+        <Button Content="Подсчитать длину самого длинного кластера" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,230,0,0" Click="LongestClusterButton_Click"/>
+        
+        
     </Grid>
 </Window>
