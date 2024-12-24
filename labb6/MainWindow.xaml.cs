@@ -20,4 +20,28 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
     }
+    
+    private void Button2_Click(object sender, RoutedEventArgs e)
+    {
+        HashTableTwo hashTable = new HashTableTwo();
+
+        // Генерация случайных чисел и вставка в таблицу
+        Random rand = new Random();
+        for (int i = 0; i < 10000; i++)
+        {
+            int key = rand.Next();
+            hashTable.Insert(key, 0); // 0 - линейное исследование
+        }
+
+        // Тестирование поиска
+        Console.WriteLine(hashTable.Search(1234, 0));
+
+        // Подсчет длины самого длинного кластера
+        Console.WriteLine($"Длина самого длинного кластера: {hashTable.LongestCluster()}");
+
+        // Тестирование производительности хэш-функций
+        hashTable.TestHashFunctions();
+        TaskTwo taskTwo = new TaskTwo();
+        taskTwo.Show();
+    }
 }
